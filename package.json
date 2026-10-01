@@ -1,0 +1,24 @@
+{
+    "name": "proton-drive-cli-node",
+    "version": "0.8.0",
+    "private": true,
+    "type": "module",
+    "description": "Unofficial Node.js build of the official Proton Drive CLI - no Bun, runs on 32-bit ARM",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Yxmaxy/proton-drive-cli-node.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "node build.mjs",
+        "clean": "rm -rf .sdk dist"
+    },
+    "dependencies": {
+        "better-sqlite3": "^12.0.0"
+    },
+    "devDependencies": {
+        "core-js": "^3.49.0",
+        "esbuild": "^0.25.0",
+        "glob": "^10.4.0"
+    }
+}
