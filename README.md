@@ -20,9 +20,11 @@ npm run build        # -> dist/proton-drive.mjs, dist/VERSION
 
 ## Install on the target
 
+Download `proton-drive.mjs` from the [latest release](https://github.com/Yxmaxy/proton-drive-cli-node/releases/latest) (or build it, see below), then install the one native dependency next to it:
+
 ```bash
 mkdir proton-drive && cd proton-drive
-cp /path/to/dist/proton-drive.mjs .
+curl -LO https://github.com/Yxmaxy/proton-drive-cli-node/releases/latest/download/proton-drive.mjs
 npm init -y >/dev/null && npm install better-sqlite3
 ```
 
@@ -52,7 +54,7 @@ See `node proton-drive.mjs help` for all commands; they are the upstream CLI's.
 
 ## Versioning
 
-`version` in `package.json` is the upstream CLI version this build tracks, and selects the upstream tag to build from. Release tags are `v<upstream>` for a new upstream version and `v<upstream>-node.N` for a rebuild of the same upstream with shim changes. The built `dist/proton-drive.mjs` is committed, so a target machine only needs `git pull`; `dist/VERSION` records the tag and commit it was built from.
+`version` in `package.json` is the upstream CLI version this build tracks, and selects the upstream tag to build from. Release tags are `v<upstream>` for a new upstream version and `v<upstream>-node.N` for a rebuild of the same upstream with shim changes. The built `dist/proton-drive.mjs` is committed for `git pull` installs; pushing a tag builds it from source on GitHub and attaches that build to a release. `dist/VERSION` records the upstream tag and commit it was built from.
 
 ## Upgrading
 
