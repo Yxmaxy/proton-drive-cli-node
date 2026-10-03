@@ -13399,18 +13399,46 @@ var init_fs_promises = __esm({
   }
 });
 
+// ../../shims/child-process.ts
+var child_process_exports = {};
+__export(child_process_exports, {
+  default: () => child_process_default,
+  spawn: () => spawn2
+});
+import * as cp from "child_process";
+import { EventEmitter as EventEmitter2 } from "events";
+import * as child_process_star from "child_process";
+function spawn2(command, ...rest) {
+  if (process.env.PROTON_DRIVE_NO_BROWSER && BROWSER_OPENERS.has(command)) {
+    const dummy = new EventEmitter2();
+    dummy.unref = () => {
+    };
+    return dummy;
+  }
+  return cp.spawn(command, ...rest);
+}
+var BROWSER_OPENERS, child_process_default;
+var init_child_process = __esm({
+  "../../shims/child-process.ts"() {
+    "use strict";
+    init_bun_global();
+    __reExport(child_process_exports, child_process_star);
+    BROWSER_OPENERS = /* @__PURE__ */ new Set(["open", "xdg-open", "start"]);
+    child_process_default = { ...cp, spawn: spawn2 };
+  }
+});
+
 // ../../shims/bun-global.ts
 import { createReadStream, createWriteStream, existsSync, statSync } from "node:fs";
 import { dirname, extname } from "node:path";
 import { Readable } from "node:stream";
-import { spawn as nodeSpawn } from "node:child_process";
 async function write(path16, data, options) {
   await (0, fs_promises_exports.mkdir)(dirname(path16), { recursive: true });
   await (0, fs_promises_exports.writeFile)(path16, data, { mode: options?.mode });
   return typeof data === "string" ? Buffer.byteLength(data) : data.byteLength;
 }
-function spawn(cmd, options = {}) {
-  const child = nodeSpawn(cmd[0], cmd.slice(1), { env: options.env, stdio: ["pipe", "pipe", "pipe"] });
+function spawn3(cmd, options = {}) {
+  const child = spawn2(cmd[0], cmd.slice(1), { env: options.env, stdio: ["pipe", "pipe", "pipe"] });
   return {
     stdin: { write: (d2) => child.stdin.write(d2), end: () => child.stdin.end() },
     stdout: Readable.toWeb(child.stdout),
@@ -13431,6 +13459,7 @@ var init_bun_global = __esm({
     import_to_hex = __toESM(require_to_hex3(), 1);
     import_from_hex = __toESM(require_from_hex3(), 1);
     init_fs_promises();
+    init_child_process();
     MIME = {
       ".pdf": "application/pdf",
       ".png": "image/png",
@@ -13530,7 +13559,7 @@ var init_bun_global = __esm({
       file: (target) => new BunFile(target),
       write,
       argv: process.argv,
-      spawn,
+      spawn: spawn3,
       Image,
       secrets,
       env: process.env
@@ -17955,9 +17984,9 @@ var require_dom = __commonJS({
       if (parent.nodeType === Node.DOCUMENT_NODE) {
         (_inDocumentAssertion || assertPreInsertionValidityInDocument)(parent, node, child);
       }
-      var cp = node.parentNode;
-      if (cp) {
-        cp.removeChild(node);
+      var cp2 = node.parentNode;
+      if (cp2) {
+        cp2.removeChild(node);
       }
       if (node.nodeType === DOCUMENT_FRAGMENT_NODE) {
         var newFirst = node.firstChild;
@@ -80535,7 +80564,7 @@ function getClaimedSize(node) {
 
 // src/cli/openBrowserUrl.ts
 init_bun_global();
-import { spawn as spawn2 } from "node:child_process";
+init_child_process();
 function openBrowserUrl(rawUrl) {
   const url = getAllowedBrowserUrl(rawUrl);
   if (!url) {

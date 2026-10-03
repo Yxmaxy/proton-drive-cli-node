@@ -45,6 +45,7 @@ See `node proton-drive.mjs help` for all commands; they are the upstream CLI's.
 
 ## Differences from the official build
 
+- `PROTON_DRIVE_NO_BROWSER=1` stops `auth login` from launching a browser; the sign-in URL is still printed. Useful on headless hosts or when another program opens the URL.
 - Credentials: the OS keychain store (`Bun.secrets`) is not available. Use `PROTON_DRIVE_CREDENTIALS_STORE=pass` ([password-store](https://www.passwordstore.org/)) or `unsafe_file`.
 - Thumbnails: `Bun.Image` has no Node equivalent, so image uploads need `--skip-thumbnails` (`-t`). Non-image uploads are unaffected.
 - Telemetry: Sentry is replaced with a no-op.

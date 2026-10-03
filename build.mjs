@@ -83,6 +83,7 @@ async function bundle() {
         inject: [path.join(ROOT, 'shims/bun-global.ts')],
         alias: {
             'node:fs/promises': path.join(ROOT, 'shims/fs-promises.ts'),
+            'node:child_process': path.join(ROOT, 'shims/child-process.ts'),
             'bun:sqlite': path.join(ROOT, 'shims/bun-sqlite.ts'),
             '@sentry/bun': path.join(ROOT, 'shims/sentry-bun.ts'),
         },
